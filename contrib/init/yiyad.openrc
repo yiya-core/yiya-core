@@ -1,0 +1,92 @@
+#!/sbin/runscript
+
+# backward compatibility for existing gentoo layout 
+#
+if [ -d "/var/lib/yiya/.yiya" ]; then
+	YIYAD_DEFAULT_DATADIR="/var/lib/yiya/.yiya"
+else
+	YIYAD_DEFAULT_DATADIR="/var/lib/yiyad"
+fi
+
+YIYAD_CONFIGFILE=${YIYAD_CONFIGFILE:-/etc/yiya/yiya.conf}
+YIYAD_PIDDIR=${YIYAD_PIDDIR:-/var/run/yiyad}
+YIYAD_PIDFILE=${YIYAD_PIDFILE:-${YIYAD_PIDDIR}/yiyad.pid}
+YIYAD_DATADIR=${YIYAD_DATADIR:-${YIYAD_DEFAULT_DATADIR}}
+YIYAD_USER=${YIYAD_USER:-${YIYA_USER:-yiya}}
+YIYAD_GROUP=${YIYAD_GROUP:-yiya}
+YIYAD_BIN=${YIYAD_BIN:-/usr/bin/yiyad}
+YIYAD_NICE=${YIYAD_NICE:-${NICELEVEL:-0}}
+YIYAD_OPTS="${YIYAD_OPTS:-${YIYA_OPTS}}"
+
+name="Yiya Core Daemon"
+description="Yiya cryptocurrency P2P network daemon"
+
+command="/usr/bin/yiyad"
+command_args="-pid=\"${YIYAD_PIDFILE}\" \
+		-conf=\"${YIYAD_CONFIGFILE}\" \
+		-datadir=\"${YIYAD_DATADIR}\" \
+		-daemon \
+		${YIYAD_OPTS}"
+
+required_files="${YIYAD_CONFIGFILE}"
+start_stop_daemon_args="-u ${YIYAD_USER} \
+			-N ${YIYAD_NICE} -w 2000"
+pidfile="${YIYAD_PIDFILE}"
+
+# The retry schedule to use when stopping the daemon. Could be either
+# a timeout in seconds or multiple signal/timeout pairs (like
+# "SIGKILL/180 SIGTERM/300")
+retry="${YIYAD_SIGTERM_TIMEOUT}"
+
+depend() {
+	need localmount net
+}
+
+# verify
+# 1) that the datadir exists and is writable (or create it)
+# 2) that a directory for the pid exists and is writable
+# 3) ownership and permissions on the config file
+start_pre() {
+	checkpath \
+	-d \
+	--mode 0750 \
+	--owner "${YIYAD_USER}:${YIYAD_GROUP}" \
+	"${YIYAD_DATADIR}"
+
+	checkpath \
+	-d \
+	--mode 0755 \
+	--owner "${YIYAD_USER}:${YIYAD_GROUP}" \
+	"${YIYAD_PIDDIR}"
+
+	checkpath -f \
+	-o ${YIYAD_USER}:${YIYAD_GROUP} \
+	-m 0660 \
+	${YIYAD_CONFIGFILE}
+
+	checkconfig || return 1
+}
+
+checkconfig()
+{
+	if ! grep -qs '^rpcpassword=' "${YIYAD_CONFIGFILE}" ; then
+		eerror ""
+		eerror "ERROR: You must set a secure rpcpassword to run yiyad."
+		eerror "The setting must appear in ${YIYAD_CONFIGFILE}"
+		eerror ""
+		eerror "This password is security critical to securing wallets "
+		eerror "and must not be the same as the rpcuser setting."
+		eerror "You can generate a suitable random password using the following "
+		eerror "command from the shell:"
+		eerror ""
+		eerror "bash -c 'tr -dc a-zA-Z0-9 < /dev/urandom | head -c32 && echo'"
+		eerror ""
+		eerror "It is recommended that you also set alertnotify so you are "
+		eerror "notified of problems:"
+		eerror ""
+		eerror "ie: alertnotify=echo %%s | mail -s \"Yiya Alert\"" \
+			"admin@foo.com"
+		eerror ""
+		return 1
+	fi
+}

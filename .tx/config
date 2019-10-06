@@ -1,0 +1,7 @@
+[main]
+host = https://www.transifex.com
+
+[yiya.qt-translation-014x]
+file_filter = src/qt/locale/yiya_<lang>.ts
+source_file = src/qt/locale/yiya_en.ts
+source_lang = en

@@ -1,0 +1,8 @@
+/usr/bin/yiya-cli		--	gen_context(system_u:object_r:yiya_exec_t,s0)
+/usr/sbin/yiyad		--	gen_context(system_u:object_r:yiya_exec_t,s0)
+/usr/lib(64)?/yiya/yiyad		--	gen_context(system_u:object_r:yiya_exec_t,s0)
+
+/etc/yiya(/.*)?		gen_context(system_u:object_r:yiya_conf_t,s0)
+/var/lib/yiya(/.*)?		gen_context(system_u:object_r:yiya_var_lib_t,s0)
+
+(/var)?/run/yiyad(/.*)?   gen_context(system_u:object_r:yiya_var_run_t,s0)

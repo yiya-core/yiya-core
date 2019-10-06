@@ -1,0 +1,81 @@
+policy_module(yiya, 1.100.1)
+
+########################################
+#
+# Declarations
+#
+
+type yiya_t;
+type yiya_exec_t;
+init_daemon_domain(yiya_t, yiya_exec_t)
+
+permissive yiya_t;
+
+type yiya_initrc_exec_t;
+init_script_file(yiya_initrc_exec_t)
+
+type yiya_conf_t;
+files_type(yiya_conf_t)
+
+type yiya_var_lib_t;
+files_type(yiya_var_lib_t)
+
+type yiya_var_run_t;
+files_type(yiya_var_run_t)
+
+type yiya_port_t;
+corenet_port(yiya_port_t)
+
+########################################
+#
+# yiya local policy
+#
+allow yiya_t self:process { fork };
+
+allow yiya_t self:fifo_file rw_fifo_file_perms;
+allow yiya_t self:unix_stream_socket create_stream_socket_perms;
+
+manage_dirs_pattern(yiya_t, yiya_conf_t, yiya_conf_t)
+manage_files_pattern(yiya_t, yiya_conf_t, yiya_conf_t)
+
+manage_dirs_pattern(yiya_t, yiya_var_lib_t, yiya_var_lib_t)
+manage_files_pattern(yiya_t, yiya_var_lib_t, yiya_var_lib_t)
+files_var_lib_filetrans(yiya_t, yiya_var_lib_t, { dir file })
+
+manage_dirs_pattern(yiya_t, yiya_var_run_t, yiya_var_run_t)
+manage_files_pattern(yiya_t, yiya_var_run_t, yiya_var_run_t)
+
+sysnet_dns_name_resolve(yiya_t)
+corenet_all_recvfrom_unlabeled(yiya_t)
+
+allow yiya_t self:tcp_socket create_stream_socket_perms;
+corenet_tcp_sendrecv_generic_if(yiya_t)
+corenet_tcp_sendrecv_generic_node(yiya_t)
+corenet_tcp_sendrecv_all_ports(yiya_t)
+corenet_tcp_bind_generic_node(yiya_t)
+
+gen_require(`
+    type yiya_port_t;
+')
+allow yiya_t yiya_port_t:tcp_socket name_bind;
+
+gen_require(`
+    type yiya_port_t;
+')
+allow yiya_t yiya_port_t:tcp_socket name_connect;
+
+domain_use_interactive_fds(yiya_t)
+
+files_read_etc_files(yiya_t)
+
+miscfiles_read_localization(yiya_t)
+
+sysnet_dns_name_resolve(yiya_t)
+
+allow yiya_t yiya_exec_t:file execute_no_trans;
+allow yiya_t self:process setsched;
+corecmd_exec_ls(yiya_t)
+corenet_tcp_connect_http_port(yiya_t)
+dev_read_urand(yiya_t)
+fs_getattr_xattr_fs(yiya_t)
+kernel_read_system_state(yiya_t)

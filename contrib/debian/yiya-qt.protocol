@@ -1,0 +1,11 @@
+[Protocol]
+exec=yiya-qt '%u'
+protocol=yiya
+input=none
+output=none
+helper=true
+listing=
+reading=false
+writing=false
+makedir=false
+deleting=false

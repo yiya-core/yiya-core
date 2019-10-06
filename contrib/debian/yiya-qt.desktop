@@ -1,0 +1,13 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Yiya Core
+Comment=Connect to the Yiya P2P Network
+Comment[de]=Verbinde mit dem Yiya peer-to-peer Netzwerk
+Comment[fr]=Yiya, monnaie virtuelle cryptographique pair à pair
+Comment[tr]=Yiya, eşten eşe kriptografik sanal para birimi
+Exec=yiya-qt %u
+Terminal=false
+Type=Application
+Icon=yiya128
+MimeType=x-scheme-handler/yiya;
+Categories=Office;Finance;

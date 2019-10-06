@@ -1,0 +1,6 @@
+usr/local/bin/yiya-qt usr/bin
+share/pixmaps/yiya32.xpm usr/share/pixmaps
+share/pixmaps/yiya16.xpm usr/share/pixmaps
+share/pixmaps/yiya128.png usr/share/pixmaps
+debian/yiya-qt.desktop usr/share/applications
+debian/yiya-qt.protocol usr/share/kde4/services/

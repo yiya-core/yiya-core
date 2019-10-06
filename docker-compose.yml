@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  yiyad:
+    image: yiyacoin/core:latest
+    build:
+      context: .
+    volumes:
+      - /home/yiya/.yiya:/root/.yiya
+    ports:
+      - 18235:18235
+      - 15791:15791
+      - 15792:15792

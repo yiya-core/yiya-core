@@ -1,0 +1,33 @@
+# /etc/conf.d/yiyad: config file for /etc/init.d/yiyad
+
+# Config file location
+#YIYAD_CONFIGFILE="/etc/yiya/yiya.conf"
+
+# What directory to write pidfile to?  (created and owned by $YIYAD_USER)
+#YIYAD_PIDDIR="/var/run/yiyad"
+
+# What filename to give the pidfile
+#YIYAD_PIDFILE="${YIYAD_PIDDIR}/yiyad.pid"
+
+# Where to write yiyad data (be mindful that the blockchain is large)
+#YIYAD_DATADIR="/var/lib/yiyad"
+
+# User and group to own yiyad process
+#YIYAD_USER="yiya"
+#YIYAD_GROUP="yiya"
+
+# Path to yiyad executable
+#YIYAD_BIN="/usr/bin/yiyad"
+
+# Nice value to run yiyad under
+#YIYAD_NICE=0
+
+# Additional options (avoid -conf and -datadir, use flags above)
+#YIYAD_OPTS=""
+
+# The timeout in seconds OpenRC will wait for yiyad to terminate
+# after a SIGTERM has been raised.
+# Note that this will be mapped as argument to start-stop-daemon's
+# '--retry' option, which means you can specify a retry schedule
+# here. For more information see man 8 start-stop-daemon.
+YIYAD_SIGTERM_TIMEOUT=60
