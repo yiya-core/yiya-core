@@ -201,11 +201,11 @@ public:
         return;  */
 
 
-        vSeeds.emplace_back("209.250.255.250", false); // Amsterdam seed
-        vSeeds.emplace_back("207.148.90.23", false); // Tokyo seed
-        vSeeds.emplace_back("45.76.18.123", false); // Chicago seed
-        vSeeds.emplace_back("155.138.151.105", false); // Toronto seed
-        vSeeds.emplace_back("149.28.189.166", false);  // Sydney seed  
+        vSeeds.emplace_back("yiya.stance-defense.org.", false); // Amsterdam seed
+        //vSeeds.emplace_back("207.148.90.23", false); // Tokyo seed
+        //vSeeds.emplace_back("45.76.18.123", false); // Chicago seed
+        //vSeeds.emplace_back("155.138.151.105", false); // Toronto seed
+        //vSeeds.emplace_back("149.28.189.166", false);  // Sydney seed  
 
         base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,31);
         base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1,90);
