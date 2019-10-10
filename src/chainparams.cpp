@@ -149,10 +149,10 @@ public:
          * The characters are rarely used upper ASCII, not valid as UTF-8, and produce
          * a large 32-bit integer with any alignment.
          */
-        pchMessageStart[0] = 0x22; // P
-        pchMessageStart[1] = 0x34; // E
-        pchMessageStart[2] = 0x15; // X
-        pchMessageStart[3] = 0x79; // A
+        pchMessageStart[0] = 0x12; 
+        pchMessageStart[1] = 0x28; 
+        pchMessageStart[2] = 0x17; 
+        pchMessageStart[3] = 0x49; 
         nDefaultPort = 15792;
         nPruneAfterHeight = 100000;
 
@@ -201,12 +201,8 @@ public:
         return;  */
 
 
-        vSeeds.emplace_back("yiya.stance-defense.org.", false); // Amsterdam seed
-        //vSeeds.emplace_back("207.148.90.23", false); // Tokyo seed
-        //vSeeds.emplace_back("45.76.18.123", false); // Chicago seed
-        //vSeeds.emplace_back("155.138.151.105", false); // Toronto seed
-        //vSeeds.emplace_back("149.28.189.166", false);  // Sydney seed  
-
+        vSeeds.emplace_back("yiya.stance-defense.org.", false); // DNS seed
+        
         base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,31);
         base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1,90);
         base58Prefixes[SECRET_KEY] =     std::vector<unsigned char>(1,63);
