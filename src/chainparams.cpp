@@ -201,7 +201,7 @@ public:
         return;  */
 
 
-        vSeeds.emplace_back("yiya.stance-defense.org.", false); // DNS seed
+        vSeeds.emplace_back("yiya.stance-defense.org", false); // DNS seed
         
         base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,31);
         base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1,90);
